@@ -41,8 +41,3 @@ while True:
             time.sleep(0.5)
             led_red.value = False
             #time.sleep(1)
-    
-        
-    
-    
-    
