@@ -13,9 +13,6 @@ import microcontroller
 import time
 from digitalio import DigitalInOut, Direction
 
-# Random number library
-from random import randint
-
 """Creating objects for required libraries"""
 #  Onboard LED and Relay setup
 led = DigitalInOut(board.LED)
@@ -40,21 +37,21 @@ MIMETypes.configure(
     keep_for=[".html", ".css", ".js", ".png", ".jpg", ".jpeg", ".gif", ".ico"],
 )
 
+# Creating pool Socket
 pool = socketpool.SocketPool(wifi.radio)
 server = Server(pool, "/static", debug=True)
 
 # Route default static
 document_root = '/www'
-
 @server.route("/")
 def base(request: Request):
     return FileResponse(request, filename='relay.html', root_path=document_root)
 
+# Post Buttons
 @server.route("/", POST)
 def buttonpress(request: Request):
     raw_text = request.raw_request.decode("utf8")
-    #print(raw_text)
-    
+
     if "1ON" in raw_text:
         relay1.value = True
         print("Relay 1 ON")
